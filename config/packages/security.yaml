@@ -1,0 +1,43 @@
+security:
+    password_hashers:
+        App\Entity\UserTest:
+            algorithm: auto
+        App\Entity\Another:
+            algorithm: auto
+        App\Entity\User:
+            algorithm: auto
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        in_memory: { memory: ~ }
+        in_database:
+            entity:
+                class: App\Entity\Visiteur
+                property: login
+        # used to reload user from session & other features (e.g. switch_user)
+        # used to reload user from session & other features (e.g. switch_user)
+    firewalls:
+        main:
+            anonymous: true
+            provider: in_database
+            form_login:
+                login_path: security_login
+                check_path: security_login
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                target: app_login
+            guard:
+                authenticators:
+                    - App\Security\GsbAuthenticator
+    access_control:
+        # require ROLE_ADMIN for /admin*
+        #- { path: '^/visiteur', roles: ROLE_USER }
+
+        # or require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin*
+        - { path: '^/', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/_error', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+
+        # the 'path' value can be any valid regular expression
+        # (this one will match URLs like /api/post/7298 and /api/comment/528491)
+        #- { path: ^/api/(post|comment)/\d+$, roles: ROLE_USER }

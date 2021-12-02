@@ -1,0 +1,30 @@
+    <!-- Division pour le sommaire -->
+  {% include 'v_entete.html.twig' %}
+  {% block body %}
+  <link href="./css" type="text/css" rel="stylesheet">
+    <div id="menuGauche">
+     <div id="infosUtil">
+    
+        <h2>
+    
+</h2>
+    
+      </div>  
+        <ul id="menuList">
+			   <li>
+            {{ visiteur.nom }} {{ visiteur.prenom }}
+			   </li>
+           <li class="smenu">
+              <a href="/saisir" title="Saisie fiche de frais ">Saisie fiche de frais</a>
+           </li>
+           <li class="smenu">
+              <a href="/consulter" title="Consultation de mes fiches de frais">Mes fiches de frais</a>
+           </li>
+ 	         <li class="smenu">
+              <a href="/logout" title="Se déconnecter">Déconnexion</a>
+           </li>
+         </ul>
+        
+    </div>
+    {% endblock %}
+    
