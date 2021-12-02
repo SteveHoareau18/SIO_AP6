@@ -10,10 +10,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GsbController extends AbstractController
 {
+    /**
+     * @Route("/", name="index")
+     */
     public function index(Request $request): Response
     {
-        if($request->cookies->get("login")==null){
-           // return $this->redirectToRoute("app_login");
+        if(!$this->getUser()){
+           return $this->redirectToRoute("app_login");
         }
         $repository = $this->getDoctrine()->getRepository(Visiteur::class);
         $visiteur = $repository->findOneBy(["login"=>$request->cookies->get("login")]);

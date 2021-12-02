@@ -20,13 +20,6 @@ security:
         main:
             anonymous: true
             provider: in_database
-            form_login:
-                login_path: security_login
-                check_path: security_login
-            logout:
-                path: app_logout
-                # where to redirect after logout
-                target: app_login
             guard:
                 authenticators:
                     - App\Security\GsbAuthenticator
@@ -35,8 +28,6 @@ security:
         #- { path: '^/visiteur', roles: ROLE_USER }
 
         # or require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin*
-        - { path: '^/', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
-        - { path: '^/_error', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
 
         # the 'path' value can be any valid regular expression
         # (this one will match URLs like /api/post/7298 and /api/comment/528491)
