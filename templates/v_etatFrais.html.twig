@@ -1,38 +1,21 @@
-﻿
-{% include 'css/style.css.twig' %}
-{% include 'v_entete.html.twig' %}
+﻿{% include 'v_sommaire.html.twig' %}
 {% block body %}
-<h3>Fiche de frais du mois <?php echo $numMois."-".$numAnnee?> : 
+<h3>Fiche de frais du mois {{ fiche.mois }} : 
     </h3>
     <div class="encadre">
     <p>
-        Etat : <?php echo $libEtat?> depuis le <?php echo $dateModif?> <br> Montant validé : <?php echo $montantValide?>
+        Etat : {{ fiche.idetat.id }} depuis le {{ fiche.datemodif|date('d-m-Y') }} <br> Montant validé : {{ fiche.montantvalide }}
               
                      
     </p>
   	<table class="listeLegere">
+    
   	   <caption>Eléments forfaitisés </caption>
         <tr>
-         <?php
-         foreach ( $lesFraisForfait as $unFraisForfait ) 
-		 {
-			$libelle = $unFraisForfait['libelle'];
-		?>	
-			<th> <?php echo $libelle?></th>
-		 <?php
-        }
-		?>
+			  <th>{{ fraisForfait.libelle }}</th>
 		</tr>
         <tr>
-        <?php
-          foreach (  $lesFraisForfait as $unFraisForfait  ) 
-		  {
-				$quantite = $unFraisForfait['quantite'];
-		?>
-                <td class="qteForfait"><?php echo $quantite?> </td>
-		 <?php
-          }
-		?>
+        <td class="qteForfait">{{ ligneFraisForfait.quantite }} </td>
 		</tr>
     </table>
   	<table class="listeLegere">

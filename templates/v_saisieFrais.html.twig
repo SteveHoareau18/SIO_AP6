@@ -1,0 +1,81 @@
+﻿{% include "v_sommaire.html.twig" %}
+<div class="encadre">
+<?php
+echo "Etat actuel: ".$lesInfosFicheFrais['libetat']."<br>";
+?>
+<div id="contenu">
+      <h2>Saisir la fiche de frais du mois <?php echo $numMois."-".$numAnnee; ?> </h2>
+         
+      <form method="POST"  action="index.php?uc=consulteFicheFrais&action=voirEtatFrais">
+      <div class="corpsForm">
+          
+          <fieldset>
+            <legend>Eléments forfaitisés
+            </legend>
+			<?php
+				foreach ($lesFraisForfait as $unFrais)
+				{
+					$idFrais = $unFrais['idfrais'];
+					$libelle = $unFrais['libelle'];
+					$quantite = $unFrais['quantite'];
+			?>
+					<p>
+						<label for="idFrais"><?php echo $libelle ?></label>
+						<input type="text" id="idFrais" name="lesfrais[<?php echo $idFrais?>]" size="10" maxlength="5" value="<?php echo $quantite?>" >
+					</p>
+			
+			<?php
+				}
+			?>
+			
+			
+			
+            <input style="display:none" name="leMois" value="<?php echo $leMois;?>">
+<select name="etat_modif">
+    <?php
+        foreach(getEtats() as $etat){
+            ?>
+            <option value="<?php echo $etat['id'];?>"><?php echo $etat['libelle'];?></option>
+            <?php
+        }
+    ?>
+</select>
+
+<table class="listeLegere">
+  	   <caption>Descriptif des éléments hors forfait
+       </caption>
+             <tr>
+                <th class="date">Date</th>
+				<th class="libelle">Libellé</th>  
+                <th class="montant">Montant</th>  
+                <th class="action">&nbsp;</th>              
+                <th class="action">&nbsp;</th>              
+             </tr>
+          
+    <?php    
+	    foreach( $lesFraisHorsForfait as $unFraisHorsForfait) 
+		{
+			$libelle = $unFraisHorsForfait['libelle'];
+			$date = $unFraisHorsForfait['date'];
+			$montant=$unFraisHorsForfait['montant'];
+			$id = $unFraisHorsForfait['id'];
+	?>		
+            <tr>
+                <td> <?php echo $date ?></td>
+                <td><?php echo $libelle ?></td>
+                <td><?php echo $montant ?></td>
+                <td><a href="index.php?uc=consulteFicheFrais&action=refuserFrais&idFrais=<?php echo $id ?>" onclick="return confirm('Voulez-vous vraiment refuser ce frais?');">Refuser</a></td>
+                <td><a href="index.php?uc=consulteFicheFrais&action=accepterFrais&idFrais=<?php echo $id ?>">Valider</td>
+				
+             </tr>
+	<?php		 
+          
+          }
+	?><br>
+<button type="submit">Modifier</button>
+           
+          </fieldset>
+      </div>
+    </form>
+    <div class="piedForm">
+      </div>
